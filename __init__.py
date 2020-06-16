@@ -5,16 +5,17 @@
 
 from aqt import gui_hooks
 from aqt.browser import SearchContext
+import shlex
 
 def willSearch(ctx: SearchContext):
-    terms = ctx.search.split()
+    terms = shlex.split(ctx.search)
     processed = []
     for term in terms:
         if ':' in term:
             processed.append(term)
         else:
             processed.append("nc:" + term)
-    ctx.search = ' '.join(processed)
+    ctx.search = ' '.join('"{0}"'.format(t) for t in processed)
     return ''
 
 gui_hooks.browser_will_search.append(willSearch)
