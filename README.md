@@ -9,8 +9,8 @@ This add-on will do the hard work for you and ensure every term in your search i
 
 It is safe to search with other modifiers included. E.g:
 
-`"deck:Chinese::Let's try 2500 Most Frequent Chinese Characters With Pinyin Only" chuan is:new zhuan`
+`"deck:Chinese::Let's try 2500 Chinese Characters" chuan is:new zhuan`
 
 Will be converted to
 
-`"deck:Chinese::Let's try 2500 Most Frequent Chinese Characters With Pinyin Only" nc:chuan is:new nc:zhuan`
+`"deck:Chinese::Let's try 2500 Chinese Characters" nc:chuan is:new nc:zhuan`
