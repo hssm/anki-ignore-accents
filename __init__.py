@@ -3,27 +3,31 @@
 # See github page to report issues or contribute:
 # https://github.com/hssm/anki-ignore-accents
 
-from aqt import gui_hooks
-from aqt.browser import SearchContext
 import shlex
 
+from aqt import gui_hooks
+from aqt.browser import SearchContext
+
+
 def willSearch(ctx: SearchContext):
-    terms = shlex.split(ctx.search)
-    processed = []
-    negated = []
-    for term in terms:
-        if term[0] == "-":
-            term = term[1:]
-            negated.append(term)
-            continue
-        if ':' in term:
-            processed.append(term)
-        else:
-            processed.append("nc:" + term)
-    ctx.search = ' '.join('"{0}"'.format(t) for t in processed)
-    ctx.search += ' '
-    ctx.search += ' '.join('-"{0}"'.format(t) for t in negated)
-    print(ctx.search)
-    return ''
+    terms = shlex.split(ctx.search, posix=False)
+    ctx.search = ' '.join(solveTerm(t) for t in terms)
+    # print(ctx.search)
+
+def solveTerm(term):
+    # Ignore anything with : as they are search features in anki
+    # If we encounter minus, quotes or brackets, move on to next letter. We want to preserve
+    # negation and/or grouping and only modify the terms inside them. This technique works well.
+    # Ignore "or" and "and" as they are also anki search keywords
+
+    if ':' in term:
+        return term
+    if term[0] == "'" or term[0] == '"' or term[0] == '-' or term[0] == '(' or term[0] == ')':
+        if len(term) > 1:
+            return term[0] + solveTerm(term[1:])
+        return term
+    if term == 'or' or term == 'and':
+        return term
+    return 'nc:' + term
 
 gui_hooks.browser_will_search.append(willSearch)
