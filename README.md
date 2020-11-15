@@ -7,10 +7,14 @@ Since version 2.1.24, Anki allows you to search in the browser while ignoring ac
 
 This add-on will do the hard work for you and ensure every term in your search is automatically converted to `nc:myword` without you doing anything else. Once the add-on is installed, the behavior is always enabled and it will always modify your browser searches.
 
-It is safe to search with other modifiers included. E.g:
+The add-on has no effect on any term that includes the `:` character as they are considered special Anki keywords. You **cannot** search for `field:myword`. Besides being difficult to implement, searching with `field:nc:myword` is not supported by Anki anyway.
 
-`"deck:Chinese::Let's try 2500 Chinese Characters" chuan is:new zhuan`
+Grouping, negation, and `and|or` keywords are safe to use normally; the add-on will find the right terms to annonate and preserve the quoting (previous versions stripped quoting).
 
-Will be converted to
+My test string:
 
-`"deck:Chinese::Let's try 2500 Chinese Characters" nc:chuan is:new nc:zhuan`
+`"deck:Chinese::Let's learn words" black -(cat and ( mouse or carrot )) with "orange" -(dog or rabbit) is:new -house`
+
+Produces this result:
+
+`"deck:Chinese::Let's learn words" nc:black -(nc:cat and ( nc:mouse or nc:carrot )) nc:with "nc:orange" -(nc:dog or nc:rabbit) is:new -nc:house`
