@@ -31,7 +31,7 @@ def solveTerm(term):
 
     if ':' in term:
         return term
-    if term[0] == "'" or term[0] == '"' or term[0] == '-' or term[0] == '(' or term[0] == ')':
+    if term[0] in ["'", '"', '-', '(', ')']:
         if len(term) > 1:
             return term[0] + solveTerm(term[1:])
         return term
