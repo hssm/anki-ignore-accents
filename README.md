@@ -13,8 +13,8 @@ Grouping, negation, and `and|or` keywords are safe to use normally; the add-on w
 
 My test string:
 
-`"deck:Chinese::Let's learn words" black -(cat and ( mouse or carrot )) with "orange" -(dog or rabbit) is:new -house`
+`"deck:Chinese::Let's learn words" black -(cat and ( mouse or carrot )) with "orange" -(dog or rabbit) is:new -house deck:"inner quotes test!"`
 
 Produces this result:
 
-`"deck:Chinese::Let's learn words" nc:black -(nc:cat and ( nc:mouse or nc:carrot )) nc:with "nc:orange" -(nc:dog or nc:rabbit) is:new -nc:house`
+`"deck:Chinese::Let's learn words" nc:black -(nc:cat and ( nc:mouse or nc:carrot )) nc:with "nc:orange" -(nc:dog or nc:rabbit) is:new -nc:house deck:"inner quotes test!"`
