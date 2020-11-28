@@ -11,8 +11,17 @@ from aqt.browser import SearchContext
 
 def willSearch(ctx: SearchContext):
     terms = shlex.split(ctx.search, posix=False)
+    c_terms = []
+    # Recombine quoted terms that were split on spaces
+    # E.g: deck:"my deck" becomes |deck:"my|, |deck"|
+    for i, t in enumerate(terms):
+        while t.count('"') == 1 and i < len(terms)-1:
+            t = t + ' ' + terms[i+1]
+            del terms[i+1]
+        terms[i] = t
+
     ctx.search = ' '.join(solveTerm(t) for t in terms)
-    # print(ctx.search)
+    #print(ctx.search)
 
 def solveTerm(term):
     # Ignore anything with : as they are search features in anki
