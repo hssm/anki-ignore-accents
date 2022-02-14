@@ -35,7 +35,7 @@ def solveTerm(term):
         if len(term) > 1:
             return term[0] + solveTerm(term[1:])
         return term
-    if term == 'or' or term == 'and':
+    if term.lower() == 'or' or term.lower() == 'and':
         return term
     return 'nc:' + term
 
